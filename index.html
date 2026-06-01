@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rarika & Felipe</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --cor-primaria: #ff3366;
+            --cor-bg: #0a0a0a;
+            --cor-card: #1a1a1a;
+            --vidro: rgba(255, 255, 255, 0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--cor-bg);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 51, 102, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 51, 102, 0.1) 0%, transparent 20%);
+            color: #fff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container { 
+            width: 100%; 
+            max-width: 400px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 18px; 
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-foto { 
+            background: var(--cor-card); 
+            border-radius: 30px; 
+            overflow: hidden; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .card-foto img { 
+            width: 100%; 
+            aspect-ratio: 1/1; 
+            object-fit: cover; 
+            display: block; 
+            transition: transform 0.5s;
+        }
+        
+        .card-foto:hover img { transform: scale(1.05); }
+
+        .info-casal { padding: 20px; background: linear-gradient(to top, var(--cor-card), transparent); }
+        .info-casal h1 { font-size: 26px; margin-bottom: 4px; font-weight: 700; letter-spacing: -0.5px; }
+        .info-casal p { color: var(--cor-primaria); font-size: 14px; font-weight: 500; }
+
+        .contador-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .bloco { 
+            background: var(--vidro); 
+            padding: 15px 5px; 
+            border-radius: 20px; 
+            text-align: center; 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        .bloco h2 { font-size: 24px; font-weight: 700; color: #fff; text-shadow: 0 0 10px rgba(255,51,102,0.3); }
+        .bloco span { font-size: 10px; color: #a7a7a7; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
+
+        .btn-musica {
+            background: #fff;
+            border: none;
+            padding: 18px;
+            border-radius: 50px;
+            color: #000;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 51, 102, 0.2);
+        }
+
+        .btn-musica:active { transform: scale(0.95); }
+        .btn-musica i { color: var(--cor-primaria); font-size: 20px; }
+
+        .mensagem { 
+            background: linear-gradient(135deg, #ff3366 0%, #c2185b 100%); 
+            padding: 25px; 
+            border-radius: 25px; 
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mensagem::after {
+            content: '❤';
+            position: absolute;
+            right: -10px;
+            bottom: -10px;
+            font-size: 80px;
+            opacity: 0.1;
+            transform: rotate(-20deg);
+        }
+
+        .mensagem small { font-size: 10px; text-transform: uppercase; font-weight: 900; opacity: 0.8; letter-spacing: 1.5px; }
+        .mensagem h3 { margin-top: 10px; font-size: 19px; line-height: 1.4; font-weight: 600; }
+
+        /* SEÇÃO DE CONQUISTAS ATUALIZADA */
+        .conquistas { 
+            background: var(--cor-card); 
+            padding: 20px; 
+            border-radius: 25px; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            text-align: center; 
+        }
+        .conquistas-grid { 
+            display: flex; 
+            justify-content: center; /* Centraliza os ícones */
+            gap: 40px; /* Espaço uniforme entre eles */
+            margin-top: 5px; 
+            font-size: 26px; 
+        }
+        .conquista-item { 
+            color: #555; 
+            cursor: pointer; 
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            filter: grayscale(100%); 
+        }
+        .conquista-item.active { 
+            filter: grayscale(0%); 
+            color: #fff; 
+            transform: scale(1.3); 
+        }
+        
+        #texto-exibido {
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--cor-primaria);
+            font-weight: 600;
+            min-height: 20px;
+            transition: 0.3s;
+        }
+
+        .btn-retro {
+            background: linear-gradient(45deg, #ff3366, #ff8533);
+            border: none;
+            padding: 22px;
+            border-radius: 25px;
+            color: white;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(255, 51, 102, 0.3);
+            transition: 0.3s;
+        }
+
+        .btn-retro:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(255, 51, 102, 0.4); }
+
+    </style>
+</head>
+<body>
+
+<audio id="musica" src="musica.mp3" loop></audio>
+
+<div class="container">
+    <div class="card-foto">
+        <img src="IMG.jpeg" alt="Rarika e Felipe">
+        <div class="info-casal">
+            <h1>Rarika & Felipe</h1>
+            <p><i class="fas fa-heart"></i> Juntos desde 29/05/2024</p>
+        </div>
+    </div>
+
+    <div class="contador-grid">
+        <div class="bloco"><h2 id="anos">0</h2><span>Anos</span></div>
+        <div class="bloco"><h2 id="meses">0</h2><span>Meses</span></div>
+        <div class="bloco"><h2 id="dias">0</h2><span>Dias</span></div>
+        <div class="bloco"><h2 id="horas">0</h2><span>Horas</span></div>
+        <div class="bloco"><h2 id="minutos">0</h2><span>Minutos</span></div>
+        <div class="bloco"><h2 id="segundos">0</h2><span>Segundos</span></div>
+    </div>
+
+    <button class="btn-musica" onclick="tocar()">
+        <i id="icone-play" class="fas fa-play-circle"></i>
+        <span id="txt-musica">Ouvir nossa música</span>
+    </button>
+
+    <div class="mensagem">
+        <small>Mensagem especial</small>
+        <h3>Eu amo você demais meu amor, feliz dia dos namorados ❤️</h3>
+    </div>
+
+    <div class="conquistas">
+        <div class="conquistas-grid">
+            <div class="conquista-item" onclick="cliqueConquista(this, 'Primeiro Encontro: 30/04/2024')"><i class="fas fa-heart"></i></div>
+            <div class="conquista-item" onclick="cliqueConquista(this, 'Primeiro Beijo: 29/05/2024')"><span>💋</span></div>
+            <div class="conquista-item" onclick="cliqueConquista(this, 'O Para Sempre: 05/10/2024')"><i class="fas fa-infinity"></i></div>
+        </div>
+        <div id="texto-exibido">Clique nos ícones acima</div>
+    </div>
+
+    <button class="btn-retro" onclick="window.location.href='retro.html'">
+        Sua Retrospectiva<br>
+        <span style="font-size: 11px; font-weight: 400; opacity: 0.9;">Clique para explorar nossos momentos</span>
+    </button>
+</div>
+
+<script>
+    const dataInicio = new Date("2024-05-29T00:00:00");
+
+    function atualizar() {
+        const agora = new Date();
+        const diff = agora - dataInicio;
+        const s = Math.floor(diff / 1000);
+        
+        document.getElementById('anos').innerText = Math.floor(s / (365.25 * 24 * 3600));
+        document.getElementById('meses').innerText = Math.floor((s % (365.25 * 24 * 3600)) / (30.44 * 24 * 3600));
+        document.getElementById('dias').innerText = Math.floor((s % (30.44 * 24 * 3600)) / (24 * 3600));
+        document.getElementById('horas').innerText = Math.floor((s % (24 * 3600)) / 3600);
+        document.getElementById('minutos').innerText = Math.floor((s % 3600) / 60);
+        document.getElementById('segundos').innerText = s % 60;
+    }
+    
+    setInterval(atualizar, 1000);
+    atualizar();
+
+    function tocar() {
+        const m = document.getElementById('musica');
+        const icone = document.getElementById('icone-play');
+        const texto = document.getElementById('txt-musica');
+        
+        if (m.paused) { 
+            m.play(); 
+            icone.classList.replace('fa-play-circle', 'fa-pause-circle');
+            texto.innerText = "Nossa música está tocando...";
+        } else { 
+            m.pause(); 
+            icone.classList.replace('fa-pause-circle', 'fa-play-circle');
+            texto.innerText = "Ouvir nossa música";
+        }
+    }
+
+    function cliqueConquista(el, txt) {
+        document.querySelectorAll('.conquista-item').forEach(i => i.classList.remove('active'));
+        el.classList.add('active');
+        const display = document.getElementById('texto-exibido');
+        display.style.opacity = 0;
+        setTimeout(() => {
+            display.innerText = txt;
+            display.style.opacity = 1;
+        }, 150);
+    }
+</script>
+</body>
+</html>
