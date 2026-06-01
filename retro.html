@@ -112,7 +112,7 @@
             transition: 0.3s; box-shadow: 0 10px 20px rgba(244,117,33,0.3);
             text-decoration: none; display: inline-block;
             position: relative; 
-            z-index: 100; /* Aumentado para ficar acima das overlays */
+            z-index: 100;
         }
 
         /* Tela de Desbloqueio */
@@ -201,7 +201,7 @@
         </div>
 
         <div class="page">
-            <div class="page-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+            <div class="page-icon"><i class="fa-solid fa-heart"></i></div>
             <h2>Feliz Dia!</h2>
             <p>Pronto para o próximo arco da nossa história?</p>
             <a href="index.html" class="btn-voltar">Voltar ao Início</a>
@@ -246,7 +246,6 @@
     }
 
     function mudar(dir) {
-        // Bloqueia avançar se for o último slide ou recuar se for o primeiro
         if (dir === 1 && atual === slides.length - 1) return;
         if (dir === -1 && atual === 0) return;
 
@@ -261,10 +260,9 @@
         slides[atual].classList.add('active');
         document.getElementById('counter').innerText = `${atual + 1} / ${slides.length}`;
         
-        // Se chegar no último slide, remove as camadas de toque para não bloquear o botão
         if (atual === slides.length - 1) {
-            navL.style.width = "30%"; // Mantém um pouco para poder voltar
-            navR.style.display = "none"; // Remove a da direita (onde fica o botão)
+            navL.style.width = "30%";
+            navR.style.display = "none";
         } else {
             navL.style.width = "30%";
             navR.style.display = "block";
