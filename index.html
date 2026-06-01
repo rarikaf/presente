@@ -204,7 +204,7 @@
         <small>Mensagem especial</small>
         <h3>Meu amor, obrigada por toda a sua paciência, 
             pelos seus carinhos e por esse amor imenso que você me dá. Você me faz a mulher mais feliz do mundo. Jamais vou esquecer o conforto do seu abraço quando mais precisei, nem dos nossos momentos em que a barriga chega a doer de tanto rir. 
-            Eu amo você demais! Feliz Dia dos Namorados! ❤️
+            Eu amo você demais! Feliz Dia dos Namorados! ❤️</h3>
     </div>
 
     <div class="conquistas">
@@ -227,15 +227,43 @@
 
     function atualizar() {
         const agora = new Date();
-        const diff = agora - dataInicio;
-        const s = Math.floor(diff / 1000);
         
-        document.getElementById('anos').innerText = Math.floor(s / (365.25 * 24 * 3600));
-        document.getElementById('meses').innerText = Math.floor((s % (365.25 * 24 * 3600)) / (30.44 * 24 * 3600));
-        document.getElementById('dias').innerText = Math.floor((s % (30.44 * 24 * 3600)) / (24 * 3600));
-        document.getElementById('horas').innerText = Math.floor((s % (24 * 3600)) / 3600);
-        document.getElementById('minutos').innerText = Math.floor((s % 3600) / 60);
-        document.getElementById('segundos').innerText = s % 60;
+        let anos = agora.getFullYear() - dataInicio.getFullYear();
+        let meses = agora.getMonth() - dataInicio.getMonth();
+        let dias = agora.getDate() - dataInicio.getDate();
+        
+        let horas = agora.getHours() - dataInicio.getHours();
+        let minutos = agora.getMinutes() - dataInicio.getMinutes();
+        let segundos = agora.getSeconds() - dataInicio.getSeconds();
+
+        if (segundos < 0) {
+            segundos += 60;
+            minutos--;
+        }
+        if (minutos < 0) {
+            minutos += 60;
+            horas--;
+        }
+        if (horas < 0) {
+            horas += 24;
+            dias--;
+        }
+        if (dias < 0) {
+            const copiaData = new Date(agora.getFullYear(), agora.getMonth(), 0);
+            dias += copiaData.getDate();
+            meses--;
+        }
+        if (meses < 0) {
+            meses += 12;
+            anos--;
+        }
+
+        document.getElementById('anos').innerText = anos;
+        document.getElementById('meses').innerText = meses;
+        document.getElementById('dias').innerText = dias;
+        document.getElementById('horas').innerText = horas;
+        document.getElementById('minutos').innerText = minutos;
+        document.getElementById('segundos').innerText = segundos;
     }
     
     setInterval(atualizar, 1000);
