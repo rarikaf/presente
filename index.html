@@ -272,7 +272,7 @@
         let minutos = agora.getMinutes() - dataInicio.getMinutes();
         let segundos = agora.getSeconds() - dataInicio.getSeconds();
 
-        if (segundos < 0) { segundos += 60; minutes--; }
+        if (segundos < 0) { segundos += 60; minutos--; }
         if (minutos < 0) { minutos += 60; horas--; }
         if (horas < 0) { horas += 24; dias--; }
         if (dias < 0) {
@@ -312,7 +312,7 @@
         }
     }
 
-    // Gerenciador da seção de conquistas (Corrigido contra cliques rápidos)
+    // Gerenciador da seção de conquistas (Corrigido e otimizado)
     let timeoutConquista;
     function cliqueConquista(el, txt) {
         document.querySelectorAll('.conquista-item').forEach(i => i.classList.remove('active'));
@@ -320,17 +320,21 @@
         
         const display = document.getElementById('texto-exibido');
         
-        // Limpa o timer anterior se houver um clique muito rápido
         clearTimeout(timeoutConquista);
         
-        // Zera a opacidade imediatamente para evitar sobreposição visual das strings
+        // Remove temporariamente a transição para sumir com o texto antigo INSTANTANEAMENTE
+        display.style.transition = 'none';
         display.style.opacity = 0;
         
-        // Aguarda o fim da transição de fade-out (150ms) para trocar o texto e dar o fade-in
-        timeoutConquista = setTimeout(() => {
-            display.innerText = txt;
-            display.style.opacity = 1;
-        }, 150);
+        // Altera o texto imediatamente no escuro
+        display.innerText = txt;
+        
+        // Força o navegador a processar a mudança de estado antes de aplicar a animação de surgimento
+        void display.offsetHeight;
+        
+        // Devolve a transição suave apenas para o efeito de Fade-In (surgir)
+        display.style.transition = 'opacity 0.15s ease-in-out';
+        display.style.opacity = 1;
     }
 
     // Efeito extra: Criar corações caindo no fundo do site
