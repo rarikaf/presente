@@ -1,687 +1,353 @@
 <!DOCTYPE html>
-
 <html lang="pt-br">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Rarika & Felipe</title>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
     <style>
-
         :root {
-
             --cor-primaria: #ff3366;
-
             --cor-bg: #0a0a0a;
-
             --cor-card: #1a1a1a;
-
             --vidro: rgba(255, 255, 255, 0.05);
-
         }
-
-
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-       
-
+        
         body {
-
             background-color: var(--cor-bg);
-
             background-image:
-
                 radial-gradient(circle at 10% 20%, rgba(255, 51, 102, 0.12) 0%, transparent 30%),
-
                 radial-gradient(circle at 90% 80%, rgba(255, 51, 102, 0.12) 0%, transparent 30%);
-
             color: #fff;
-
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-
             display: flex;
-
             justify-content: center;
-
             align-items: center;
-
             min-height: 100vh;
-
             padding: 20px;
-
             overflow-x: hidden;
-
             position: relative;
-
         }
-
-
 
         /* Chuva de corações */
-
         .heart-particle {
-
             position: absolute;
-
             color: var(--cor-primaria);
-
             opacity: 0.6;
-
             pointer-events: none;
-
             animation: fall linear forwards;
-
             z-index: 0;
-
         }
-
-
 
         @keyframes fall {
-
             0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
-
             10% { opacity: 0.6; }
-
             90% { opacity: 0.6; }
-
             100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
-
         }
-
-
 
         .container {
-
             width: 100%;
-
             max-width: 400px;
-
             display: flex;
-
             flex-direction: column;
-
             gap: 18px;
-
             animation: fadeIn 1.2s ease-out;
-
             z-index: 1;
-
         }
-
-
 
         @keyframes fadeIn {
-
             from { opacity: 0; transform: translateY(15px); }
-
             to { opacity: 1; transform: translateY(0); }
-
         }
-
-
 
         .card-foto {
-
             background: var(--cor-card);
-
             border-radius: 30px;
-
             overflow: hidden;
-
             border: 1px solid rgba(255, 255, 255, 0.1);
-
             text-align: center;
-
             box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-
         }
-
-
 
         .card-foto .img-wrapper {
-
             width: 100%;
-
             aspect-ratio: 1/1;
-
             overflow: hidden;
-
         }
-
-
 
         .card-foto img {
-
             width: 100%;
-
             height: 100%;
-
             object-fit: cover;
-
             display: block;
-
             transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-
         }
-
-       
-
+        
         .card-foto:hover img { transform: scale(1.06); }
 
-
-
         .info-casal { padding: 22px; background: linear-gradient(to top, var(--cor-card) 80%, transparent); }
-
         .info-casal h1 { font-size: 26px; margin-bottom: 6px; font-weight: 700; letter-spacing: -0.5px; }
-
         .info-casal p { color: var(--cor-primaria); font-size: 14px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 6px; }
 
-
-
         /* Grid corrigido para simetria (2 linhas de 3 itens) */
-
         .contador-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-
         .bloco {
-
             background: var(--vidro);
-
             padding: 14px 5px;
-
             border-radius: 20px;
-
             text-align: center;
-
             border: 1px solid rgba(255, 255, 255, 0.08);
-
             backdrop-filter: blur(12px);
-
             -webkit-backdrop-filter: blur(12px);
-
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-
         }
-
         .bloco h2 { font-size: 24px; font-weight: 700; color: #fff; text-shadow: 0 0 10px rgba(255,51,102,0.4); }
-
         .bloco span { font-size: 10px; color: #a7a7a7; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; display: block; }
 
-
-
         .btn-musica {
-
             background: #fff;
-
             border: none;
-
             padding: 18px;
-
             border-radius: 50px;
-
             color: #000;
-
             font-size: 15px;
-
             font-weight: 700;
-
             cursor: pointer;
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
             gap: 12px;
-
             transition: all 0.3s ease;
-
             box-shadow: 0 4px 15px rgba(255, 51, 102, 0.2);
-
         }
-
-
 
         .btn-musica:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 51, 102, 0.3); }
-
         .btn-musica:active { transform: scale(0.96); }
-
         .btn-musica i { color: var(--cor-primaria); font-size: 20px; transition: transform 0.3s; }
 
-
-
         .mensagem {
-
             background: linear-gradient(135deg, #ff3366 0%, #c2185b 100%);
-
             padding: 25px;
-
             border-radius: 25px;
-
             position: relative;
-
             overflow: hidden;
-
             box-shadow: 0 8px 20px rgba(255, 51, 102, 0.2);
-
         }
-
-       
-
+        
         .mensagem::after {
-
             content: '❤';
-
             position: absolute;
-
             right: -10px;
-
             bottom: -10px;
-
             font-size: 80px;
-
             opacity: 0.12;
-
             transform: rotate(-20deg);
-
         }
-
-
 
         .mensagem small { font-size: 10px; text-transform: uppercase; font-weight: 900; opacity: 0.8; letter-spacing: 1.5px; display: block; }
-
         .mensagem h3 { margin-top: 10px; font-size: 18px; line-height: 1.5; font-weight: 600; }
 
-
-
         .conquistas {
-
             background: var(--cor-card);
-
             padding: 20px;
-
             border-radius: 25px;
-
             border: 1px solid rgba(255, 255, 255, 0.1);
-
             text-align: center;
-
             box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-
         }
-
         .conquistas-grid {
-
             display: flex;
-
             justify-content: center;
-
             gap: 40px;
-
             margin-top: 8px;
-
             font-size: 26px;
-
         }
-
         .conquista-item {
-
             color: #444;
-
             cursor: pointer;
-
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
             filter: grayscale(100%);
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
         }
-
         .conquista-item.active {
-
             filter: grayscale(0%);
-
             color: #fff;
-
             transform: scale(1.35);
-
         }
-
-       
-
+        
         #texto-exibido {
-
             margin-top: 20px;
-
             font-size: 14px;
-
             color: var(--cor-primaria);
-
             font-weight: 600;
-
             min-height: 20px;
-
-            transition: opacity 0.2s ease;
-
+            transition: opacity 0.15s ease-in-out;
             opacity: 1;
-
         }
-
-
 
         .btn-retro {
-
             background: linear-gradient(45deg, #ff3366, #ff8533);
-
             border: none;
-
             padding: 20px;
-
             border-radius: 25px;
-
             color: white;
-
             font-size: 17px;
-
             font-weight: 700;
-
             cursor: pointer;
-
             text-align: center;
-
             box-shadow: 0 8px 20px rgba(255, 51, 102, 0.3);
-
             transition: all 0.3s;
-
         }
 
-
-
         .btn-retro:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(255, 51, 102, 0.5); }
-
         .btn-retro:active { transform: translateY(-1px); }
 
-
-
     </style>
-
 </head>
-
 <body>
-
-
 
 <audio id="musica" src="musica.mp3" loop></audio>
 
-
-
 <div class="container">
-
     <div class="card-foto">
-
         <div class="img-wrapper">
-
             <img src="IMG.jpeg" alt="Rarika e Felipe">
-
         </div>
-
         <div class="info-casal">
-
             <h1>Rarika & Felipe</h1>
-
             <p><i class="fas fa-heart"></i> Juntos desde 29/05/2024</p>
-
         </div>
-
     </div>
-
-
 
     <div class="contador-grid">
-
         <div class="bloco"><h2 id="anos">0</h2><span>Anos</span></div>
-
         <div class="bloco"><h2 id="meses">0</h2><span>Meses</span></div>
-
         <div class="bloco"><h2 id="dias">0</h2><span>Dias</span></div>
-
         <div class="bloco"><h2 id="horas">0</h2><span>Horas</span></div>
-
         <div class="bloco"><h2 id="minutos">0</h2><span>Minutos</span></div>
-
         <div class="bloco"><h2 id="segundos">0</h2><span>Segundos</span></div>
-
     </div>
-
-
 
     <button class="btn-musica" onclick="tocar()">
-
         <i id="icone-play" class="fas fa-play-circle"></i>
-
         <span id="txt-musica">Ouvir nossa música</span>
-
     </button>
-
-
 
     <div class="mensagem">
-
         <small>Mensagem especial</small>
-
         <h3>Meu amor, obrigada por toda a sua paciência, pelos seus carinhos e por esse amor imenso que você me dá. Você me faz a mulher mais feliz do mundo. Jamais vou esquecer o conforto do seu abraço quando mais precisei, nem dos nossos momentos em que a barriga chega a doer de tanto rir. Eu amo você demais! Feliz Dia dos Namorados! ❤️</h3>
-
     </div>
-
-
 
     <div class="conquistas">
-
         <div class="conquistas-grid">
-
             <div class="conquista-item" onclick="cliqueConquista(this, 'Primeiro Encontro: 30/04/2024')"><i class="fas fa-heart"></i></div>
-
             <div class="conquista-item" onclick="cliqueConquista(this, 'Primeiro Beijo: 29/05/2024')"><span>💋</span></div>
-
             <div class="conquista-item" onclick="cliqueConquista(this, 'O Para Sempre: 05/10/2024')"><i class="fas fa-infinity"></i></div>
-
         </div>
-
         <div id="texto-exibido">Clique nos ícones acima</div>
-
     </div>
 
-
-
     <button class="btn-retro" onclick="window.location.href='retro.html'">
-
         Sua Retrospectiva<br>
-
         <span style="font-size: 11px; font-weight: 400; opacity: 0.9;">Clique para explorar nossos momentos</span>
-
     </button>
-
 </div>
 
-
-
 <script>
-
     const dataInicio = new Date("2024-05-29T00:00:00");
 
-
-
     // Contador de tempo preciso baseado em calendário real
-
     function atualizar() {
-
         const agora = new Date();
-
-       
-
+        
         let anos = agora.getFullYear() - dataInicio.getFullYear();
-
         let meses = agora.getMonth() - dataInicio.getMonth();
-
         let dias = agora.getDate() - dataInicio.getDate();
-
         let horas = agora.getHours() - dataInicio.getHours();
-
         let minutos = agora.getMinutes() - dataInicio.getMinutes();
-
         let segundos = agora.getSeconds() - dataInicio.getSeconds();
 
-
-
-        if (segundos < 0) { segundos += 60; minutos--; }
-
+        if (segundos < 0) { segundos += 60; minutes--; }
         if (minutos < 0) { minutos += 60; horas--; }
-
         if (horas < 0) { horas += 24; dias--; }
-
         if (dias < 0) {
-
             const mesAnterior = new Date(agora.getFullYear(), agora.getMonth(), 0);
-
             dias += mesAnterior.getDate();
-
             meses--;
-
         }
-
         if (meses < 0) { meses += 12; anos--; }
 
-
-
         document.getElementById('anos').innerText = anos;
-
         document.getElementById('meses').innerText = meses;
-
         document.getElementById('dias').innerText = dias;
-
         document.getElementById('horas').innerText = horas;
-
         document.getElementById('minutos').innerText = minutos;
-
         document.getElementById('segundos').innerText = segundos;
-
     }
-
-   
-
+    
     setInterval(atualizar, 1000);
-
     atualizar();
 
-
-
     // Controle do player de música
-
     function tocar() {
-
         const m = document.getElementById('musica');
-
         const icone = document.getElementById('icone-play');
-
         const texto = document.getElementById('txt-musica');
-
-       
-
+        
         if (m.paused) {
-
             m.play().catch(e => console.log("Interação prévia necessária para tocar áudio."));
-
             icone.classList.replace('fa-play-circle', 'fa-pause-circle');
-
             icone.style.transform = "scale(1.1)";
-
             texto.innerText = "Nossa música está tocando...";
-
         } else {
-
             m.pause();
-
             icone.classList.replace('fa-pause-circle', 'fa-play-circle');
-
             icone.style.transform = "scale(1)";
-
             texto.innerText = "Ouvir nossa música";
-
         }
-
     }
 
-
-
-    // Gerenciador da seção de conquistas
-
+    // Gerenciador da seção de conquistas (Corrigido contra cliques rápidos)
+    let timeoutConquista;
     function cliqueConquista(el, txt) {
-
         document.querySelectorAll('.conquista-item').forEach(i => i.classList.remove('active'));
-
         el.classList.add('active');
-
+        
         const display = document.getElementById('texto-exibido');
-
+        
+        // Limpa o timer anterior se houver um clique muito rápido
+        clearTimeout(timeoutConquista);
+        
+        // Zera a opacidade imediatamente para evitar sobreposição visual das strings
         display.style.opacity = 0;
-
-        setTimeout(() => {
-
+        
+        // Aguarda o fim da transição de fade-out (150ms) para trocar o texto e dar o fade-in
+        timeoutConquista = setTimeout(() => {
             display.innerText = txt;
-
             display.style.opacity = 1;
-
         }, 150);
-
     }
-
-
 
     // Efeito extra: Criar corações caindo no fundo do site
-
     function criarCoracao() {
-
         const cont = document.body;
-
         const coracao = document.createElement('div');
-
         coracao.classList.add('heart-particle');
-
         coracao.innerHTML = '❤';
-
         coracao.style.left = Math.random() * 100 + 'vw';
-
         coracao.style.fontSize = Math.random() * 12 + 8 + 'px';
-
         coracao.style.animationDuration = Math.random() * 3 + 4 + 's';
-
-       
-
+        
         cont.appendChild(coracao);
-
-       
-
+        
         setTimeout(() => { coracao.remove(); }, 6000);
-
     }
-
     setInterval(criarCoracao, 400);
-
 </script>
-
 </body>
-
 </html>
