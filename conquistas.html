@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destaques da Temporada - Nossos Momentos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --cor-bg: #0a0b0d;
+            --cor-container: #141519;
+            --cor-card: #23252b;
+            --cor-card-hover: #2d3039;
+            --streaming-laranja: #f47521;
+            --streaming-laranja-glow: rgba(244, 117, 33, 0.4);
+            --cor-texto: #ffffff;
+            --cor-texto-secundario: #a0a5b5;
+            --border-color: #2a2c34;
+            --transicao: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--cor-bg);
+            color: var(--cor-texto);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            padding: 24px 12px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .streaming-container {
+            width: 100%;
+            max-width: 440px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            background: var(--cor-container);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        /* Cabeçalho */
+        .streaming-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 4px;
+        }
+
+        .btn-voltar {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s var(--transicao);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .btn-voltar:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(-2px);
+        }
+
+        .espaco-foto-logo {
+            display: flex;
+            align-items: center;
+            height: 32px; 
+        }
+        
+        .espaco-foto-logo img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        /* Títulos */
+        .titulo-secao h1 {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -0.3px;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .titulo-secao p {
+            font-size: 13.5px;
+            color: var(--cor-texto-secundario);
+            line-height: 1.5;
+        }
+
+        /* Filtros Modernos (Estilo Pílula) */
+        .filtros-streaming {
+            display: flex;
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 4px;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        .filtro-item {
+            flex: 1;
+            background: transparent;
+            color: var(--cor-texto-secundario);
+            padding: 8px 12px;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.25s var(--transicao);
+            text-align: center;
+        }
+
+        .filtro-item.ativo {
+            color: #000;
+            background: var(--streaming-laranja);
+            box-shadow: 0 4px 12px rgba(244, 117, 33, 0.25);
+        }
+
+        .filtro-item:hover:not(.ativo) {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Lista de Cards */
+        .lista-episodios {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        /* Estrutura do Card */
+        .card-episodio {
+            background: var(--cor-card);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+            transition: transform 0.3s var(--transicao), background-color 0.3s var(--transicao), box-shadow 0.3s var(--transicao);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            position: relative;
+            animation: fadeInUp 0.4s var(--transicao) backwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-episodio::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 0;
+            background: var(--streaming-laranja);
+            transition: width 0.2s var(--transicao);
+            z-index: 5;
+        }
+
+        .card-episodio:hover {
+            transform: translateY(-3px);
+            background: var(--cor-card-hover);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(244, 117, 33, 0.25);
+        }
+
+        .card-episodio:hover::before {
+            width: 4px;
+        }
+
+        /* Thumbnails */
+        .thumb-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #101115;
+            overflow: hidden;
+        }
+
+        .thumb-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s var(--transicao);
+        }
+
+        .card-episodio:hover .thumb-wrapper img {
+            transform: scale(1.05);
+        }
+
+        /* Play Icon Hover Over */
+        .thumb-wrapper::after {
+            content: '\f144';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.7);
+            font-size: 48px;
+            color: #fff;
+            opacity: 0;
+            transition: all 0.3s var(--transicao);
+            pointer-events: none;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.6));
+            z-index: 3;
+        }
+
+        .card-episodio:hover .thumb-wrapper::after {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* Tags Estilo Glassmorphism */
+        .tag-streaming, .data-streaming {
+            position: absolute;
+            bottom: 10px;
+            background: rgba(20, 21, 25, 0.75);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 1px solid rgba(255,255,255,0.08);
+            z-index: 2;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-streaming { left: 10px; }
+        .data-streaming { right: 10px; color: #e1e3e6; }
+        
+        .tag-streaming.especial {
+            background: var(--streaming-laranja);
+            color: #000;
+            border: none;
+        }
+
+        /* Informações do Texto */
+        .info-episodio {
+            padding: 16px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .info-episodio .meta-titulo {
+            font-size: 11px;
+            color: var(--streaming-laranja);
+            font-weight: 700;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .info-episodio h2 {
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #fff;
+            transition: color 0.2s ease;
+        }
+
+        .card-episodio:hover .info-episodio h2 {
+            color: var(--streaming-laranja);
+        }
+
+        .info-episodio p {
+            font-size: 13px;
+            color: var(--cor-texto-secundario);
+            line-height: 1.5;
+        }
+
+        /* Barra de Progresso Traseira */
+        .barra-progresso-container {
+            width: 100%;
+            height: 3px;
+            background: rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .barra-progresso {
+            height: 100%;
+            background: var(--streaming-laranja);
+            box-shadow: 0 0 6px var(--streaming-laranja);
+        }
+    </style>
+</head>
+<body>
+
+<div class="streaming-container">
+    
+    <div class="streaming-header">
+        <a href="index.html" class="btn-voltar">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </a>
+        
+        <div class="espaco-foto-logo">
+            <img src="cr.png" alt="Logo">
+        </div>
+    </div>
+
+    <div class="titulo-secao">
+        <h1>Destaques da Temporada</h1>
+        <p>Abaixo estão listados os episódios e produções mais bem avaliados da nossa história.</p>
+    </div>
+
+    <div class="filtros-streaming">
+        <button class="filtro-item ativo" onclick="filtrar(event, 'todos')">Todos</button>
+        <button class="filtro-item" onclick="filtrar(event, 'episodio')">Episódios</button>
+        <button class="filtro-item" onclick="filtrar(event, 'filme')">Filmes</button>
+    </div>
+
+    <div class="lista-episodios">
+
+        <div class="card-episodio" data-tipo="episodio">
+            <div class="thumb-wrapper">
+                <img src="encontro.jpg" alt="Primeiro Encontro">
+                <span class="tag-streaming">1080p</span>
+                <span class="data-streaming">30/04/2024</span>
+            </div>
+            <div class="info-episodio">
+                <div class="meta-titulo"><i class="fas fa-star"></i> Temporada 1 • Episódio 01</div>
+                <h2>O Arco de Introdução</h2>
+                <p>O episódio piloto que deu início a tudo. O dia do nosso memorável primeiro encontro, onde as peças começaram a se encaixar perfeitamente.</p>
+            </div>
+            <div class="barra-progresso-container">
+                <div class="barra-progresso" style="width: 100%;"></div>
+            </div>
+        </div>
+
+        <div class="card-episodio" data-tipo="episodio">
+            <div class="thumb-wrapper">
+                <img src="beijo.jpg" alt="Primeiro Beijo">
+                <span class="tag-streaming especial">Especial</span>
+                <span class="data-streaming">29/05/2024</span>
+            </div>
+            <div class="info-episodio">
+                <div class="meta-titulo"><i class="fas fa-star"></i> Temporada 1 • Episódio 12</div>
+                <h2>O Dia em que Rimos Até a Barriga Doer</h2>
+                <p>Neste ponto da história, o enredo ganha força total. O início oficial do nosso namoro recheado de piadas internas, conforto instantâneo e gargalhadas sinceras.</p>
+            </div>
+            <div class="barra-progresso-container">
+                <div class="barra-progresso" style="width: 100%;"></div>
+            </div>
+        </div>
+
+        <div class="card-episodio" data-tipo="episodio">
+            <div class="thumb-wrapper">
+                <img src="amo.jpg" alt="O Primeiro Eu Te Amo">
+                <span class="tag-streaming especial">Clímax</span>
+                <span class="data-streaming">12/06/2024</span>
+            </div>
+            <div class="info-episodio">
+                <div class="meta-titulo"><i class="fas fa-heart"></i> Temporada 1 • Episódio 15</div>
+                <h2>As Três Palavras, Oito Letras</h2>
+                <p>O divisor de águas definitivo. Quando o sentimento transbordou e o primeiro "Eu Te Amo" foi dito em voz alta, destravando um nível totalmente novo de conexão, cumplicidade e carinho entre nós dois.</p>
+            </div>
+            <div class="barra-progresso-container">
+                <div class="barra-progresso" style="width: 100%;"></div>
+            </div>
+        </div>
+
+        <div class="card-episodio" data-tipo="filme">
+            <div class="thumb-wrapper">
+                <img src="viagem.jpg" alt="Nossa primeira viagem">
+                <span class="tag-streaming">Filme</span>
+                <span class="data-streaming">14/11/2024</span>
+            </div>
+            <div class="info-episodio">
+                <div class="meta-titulo"><i class="fas fa-film"></i> Filme Especial</div>
+                <h2>Nossa Primeira Viagem Juntos</h2>
+                <p>Disponível em Ultra HD. Uma produção de tirar o fôlego fora dos cenários habituais. Consolidação absoluta do arco "O Para Sempre" com paisagens lindas e companheirismo sem igual.</p>
+            </div>
+            <div class="barra-progresso-container">
+                <div class="barra-progresso" style="width: 100%;"></div>
+            </div>
+        </div>
+
+        <div class="card-episodio" data-tipo="episodio">
+            <div class="thumb-wrapper">
+                <img src="futebol.jpg" alt="Campeonato de Futebol">
+                <span class="tag-streaming">HD</span>
+                <span class="data-streaming">16/07/2025</span>
+            </div>
+            <div class="info-episodio">
+                <div class="meta-titulo"><i class="fas fa-trophy"></i> Temporada 1 • Episódio 22</div>
+                <h2>O Arco do Título: Grito de Campeão</h2>
+                <p>O emocionante arco esportivo da história! Muito suor em campo, raça a cada minuto e o apito final consagrando a vitória. O momento inesquecível de levantar a taça e comemorar o título de campeão.</p>
+            </div>
+            <div class="barra-progresso-container">
+                <div class="barra-progresso" style="width: 100%;"></div>
+            </div>
+        </div>
+
+        <div class="card-episodio" data-tipo="episodio">
+            <div class="thumb-wrapper">
+                <img src="corrida.jpg" alt="Primeira Corrida">
+                <span class="tag-streaming">1080p</span>
+                <span class="data-streaming">03/08/2025</span>
+            </div>
+            <div class="info-episodio">
+                <div class="meta-titulo"><i class="fas fa-running"></i> Especial de Parceria</div>
+                <h2>A Primeira Corrida Juntos</h2>
+                <p>Um episódio focado em ritmo, foco e superação de limites. Cada quilômetro vencido e cada linha de chegada ultrapassada deixam claro que, correndo com seu apoio, consigo ir muito mais longe.</p>
+            </div>
+            <div class="barra-progresso-container">
+                <div class="barra-progresso" style="width: 90%;"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function filtrar(evt, tipo) {
+        // Altera as abas de filtro
+        const botoes = document.querySelectorAll('.filtro-item');
+        botoes.forEach(btn => btn.classList.remove('ativo'));
+        evt.currentTarget.classList.add('ativo');
+
+        // Altera os cards com efeito suave
+        const cards = document.querySelectorAll('.card-episodio');
+        cards.forEach(card => {
+            if (tipo === 'todos' || card.getAttribute('data-tipo') === tipo) {
+                card.style.display = 'flex';
+                // Reinicia a animação de fade-in
+                card.style.animation = 'none';
+                void card.offsetWidth; 
+                card.style.animation = 'fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) backwards';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
